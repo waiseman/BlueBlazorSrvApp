@@ -1,0 +1,57 @@
+﻿@page "/lifecycle/{param}"
+
+
+<h3>LifeCycle</h3>
+
+<p>Message1 value: @message</p>
+<p>Message2 value: @message2</p>
+
+<p>The Value of Parameter is : @param </p>
+
+@code {
+
+    [Parameter]
+    public string? param { get; set; }
+
+    private string message ="Not Set";
+    private string message2 = "Not Set";
+
+
+    public override Task SetParametersAsync(ParameterView parameters)
+    {
+
+        if(parameters.TryGetValue<string>(nameof(param),out var value))
+        {
+            if(value!=null)
+            {
+                message = value + "Testing ";
+            }
+
+        }
+
+        return base.SetParametersAsync(parameters);
+
+
+    }
+
+    protected override void OnInitialized()
+    {
+        message2 = "Is  : " + DateTime.Now;
+    }
+    protected override void OnParametersSet()
+    {
+
+        message = "Briyani by On Param ";
+
+
+    }
+    protected override void OnAfterRender(bool firstRender)
+    {
+
+        message = "Briyani by On Param with Dhaniya";
+
+        StateHasChanged();
+    }
+
+
+}
