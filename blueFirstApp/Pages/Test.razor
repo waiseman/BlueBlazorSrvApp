@@ -1,14 +1,31 @@
-﻿@page "/"
+﻿
 @using blueFirstApp.Compoenents
-
+@using blueFirstApp.Data;
 
 
 <h3>Title of the component</h3>
 <p>We are testing Blazor Comopnents with section blue</p>
 
-<TestComp />
+ <b>@Param1</b>
+ <br/>
+ <b>@Param2</b>
+
+ <p>@StudentParam.Name</p>
+ <p>@StudentParam.Description</p>
+
 
 
 @code {
+    [Parameter]
+    public string Param1 { get; set; }
+
+    [Parameter]
+    public int Param2 { get; set; }
+    
+    [Parameter]
+    public Student StudentParam { get; set; }
+
+
+
 
 }

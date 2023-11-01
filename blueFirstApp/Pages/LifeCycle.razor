@@ -1,12 +1,21 @@
 ﻿@page "/lifecycle/{param}"
 
+@inject NavigationManager nav;
+
+@layout MainLayout2
+
 
 <h3>LifeCycle</h3>
+
 
 <p>Message1 value: @message</p>
 <p>Message2 value: @message2</p>
 
 <p>The Value of Parameter is : @param </p>
+
+<NavLink href="fetchdata" >Fetch Data Link</NavLink>
+
+<button   @onclick="GoToHomeClicked">Go To Home</button>
 
 @code {
 
@@ -19,38 +28,46 @@
 
     public override Task SetParametersAsync(ParameterView parameters)
     {
-
-        if(parameters.TryGetValue<string>(nameof(param),out var value))
+        if (parameters.TryGetValue<string>(nameof(param), out var value))
         {
-            if(value!=null)
+            if (value != null)
             {
-                message = value + "Testing ";
+                message = value + " Testing ";
             }
 
         }
-
         return base.SetParametersAsync(parameters);
-
-
     }
 
     protected override void OnInitialized()
     {
         message2 = "Is  : " + DateTime.Now;
     }
+
     protected override void OnParametersSet()
     {
 
-        message = "Briyani by On Param ";
-
+        message = "Briyani Cooking Started by On Param Set ";
 
     }
+
     protected override void OnAfterRender(bool firstRender)
     {
 
         message = "Briyani by On Param with Dhaniya";
 
         StateHasChanged();
+
+
+    }
+
+    private void GoToHomeClicked()
+    {
+        
+        nav.NavigateTo("",true);
+
+
+
     }
 
 
