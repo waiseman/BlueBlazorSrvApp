@@ -1,12 +1,30 @@
 ﻿@page "/inputfrm"
+@using blueFirstApp.Data;
 
-<h3>Component</h3>
+<h3>Student Form </h3>
 
-<input type="checkbox">
-<input type="date">
-<input type="file">
-<input type="number">
-<input type="radio">
+<EditForm Model=student OnValidSubmit="FormSubmited" OnInvalidSubmit="FormInvalidSubmited">
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+    <p>
+        <label>Enter Student Name</label>
+        <InputText  @bind-Value="student.Name"/>
+        <ValidationMessage For="()=>student.Name" />
+
+    </p>
+
+    <p>
+        <label>Enter Student Age</label>
+        <InputNumber @bind-Value="student.Age" />
+        <ValidationMessage For="()=>student.Age" />
+
+    </p>
+    
+   <button type="submit">Save</button>
+    
+</EditForm>
+
+
         <br />
         <br />
 
@@ -20,16 +38,28 @@
 
 }*@
 
-<input placeholder="enter text here" value="@message">
+@*<input placeholder="enter text here" value="@message">
 
-<button @onclick="ChangeText">Magic</button>
+<button @onclick="ChangeText">Magic</button>*@
 
 @code {
     private int number;
     private string message;
 
+    private Student student = new Student();
+
     void ChangeText()
     {
         message = "Changed";
+    }
+    
+    void FormSubmited()
+    {
+        message = "Form Has Been Submited" +student.Name;
+    }
+
+    void FormInvalidSubmited()
+    {
+        message = "Please Fix the Error and Submit Again";
     }
 }
